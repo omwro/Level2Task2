@@ -2,6 +2,7 @@ package nl.omererdem.madlevel2task2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,9 @@ class MainActivity : AppCompatActivity() {
     private val questions: List<Question> = Question.questions
 
     private val questionAdapter = QuestionAdapter(questions)
+
+    private val SWIPE_LEFT_DIRECTION = 4
+    private val SWIPE_RIGHT_DIRECTION = 8
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +51,23 @@ class MainActivity : AppCompatActivity() {
             // Callback triggered when a user swiped an item.
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                questions[position].result = true
+                if (direction == SWIPE_LEFT_DIRECTION) {
+                    checkAnswer(questions[position], false)
+                } else if (direction == SWIPE_RIGHT_DIRECTION) {
+                    checkAnswer(questions[position], true)
+                }
                 questionAdapter.notifyDataSetChanged()
             }
         }
         return ItemTouchHelper(callback)
     }
 
+    private fun checkAnswer(question: Question, answer: Boolean) {
+        if (question.answer == answer) {
+            Log.i("Answer", "is correct")
+            question.result = true
+        } else {
+            Log.i("Answer", "is not correct")
+        }
+    }
 }
