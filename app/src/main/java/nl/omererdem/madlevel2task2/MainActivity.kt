@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import nl.omererdem.madlevel2task2.databinding.ActivityMainBinding
 
@@ -64,10 +65,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAnswer(question: Question, answer: Boolean) {
         if (question.answer == answer) {
-            Log.i("Answer", "is correct")
             questions.remove(question)
         } else {
-            Log.i("Answer", "is not correct")
+            showSnackbar()
         }
+    }
+
+    private fun showSnackbar() {
+        Snackbar.make(binding.rvQuestions, getString(R.string.wrong_answer), Snackbar.LENGTH_LONG).show()
     }
 }

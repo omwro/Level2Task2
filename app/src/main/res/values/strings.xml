@@ -3,4 +3,5 @@
     <string name="title">Quiz instructions</string>
     <string name="description">Swipe right for true, swipe left for false</string>
     <string name="placeholder_text">Placeholder text</string>
+    <string name="wrong_answer">Your answer was incorrect and will not remove the question</string>
 </resources>
