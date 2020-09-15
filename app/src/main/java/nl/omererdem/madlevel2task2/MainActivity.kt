@@ -12,7 +12,7 @@ import nl.omererdem.madlevel2task2.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val questions: List<Question> = Question.questions
+    private val questions: ArrayList<Question> = Question.questions
 
     private val questionAdapter = QuestionAdapter(questions)
 
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(question: Question, answer: Boolean) {
         if (question.answer == answer) {
             Log.i("Answer", "is correct")
-            question.result = true
+            questions.remove(question)
         } else {
             Log.i("Answer", "is not correct")
         }
