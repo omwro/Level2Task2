@@ -11,12 +11,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import nl.omererdem.madlevel2task2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    // View binding
     private lateinit var binding: ActivityMainBinding
 
+    // Question list
     private val questions: ArrayList<Question> = Question.questions
 
+    // Adapter on the question items
     private val questionAdapter = QuestionAdapter(questions)
 
+    // Constance's of swipe direction value
     private val SWIPE_LEFT_DIRECTION = 4
     private val SWIPE_RIGHT_DIRECTION = 8
 
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         initViews()
     }
 
+    // Set recyclerview on initialize
     fun initViews() {
         binding.rvQuestions.layoutManager = LinearLayoutManager(this)
         binding.rvQuestions.adapter = questionAdapter
@@ -34,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         createItemTouchHelper().attachToRecyclerView(rvQuestions)
     }
 
+    // Swipe touch helper for the question items
     private fun createItemTouchHelper(): ItemTouchHelper {
-
         // Callback which is used to create the ItemTouch helper. Only enables left swipe.
         // Use ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) to also enable right swipe.
         val callback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -49,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
 
-            // Callback triggered when a user swiped an item.
+            // Callback triggered when a user swiped an item to the left or right
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 if (direction == SWIPE_LEFT_DIRECTION) {
@@ -63,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         return ItemTouchHelper(callback)
     }
 
+    // Check if the answer is correct. Remove if it is true, else show a message
     private fun checkAnswer(question: Question, answer: Boolean) {
         if (question.answer == answer) {
             questions.remove(question)
@@ -71,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Show a long snackbar with a 'wrong answer' message
     private fun showSnackbar() {
         Snackbar.make(binding.rvQuestions, getString(R.string.wrong_answer), Snackbar.LENGTH_LONG).show()
     }

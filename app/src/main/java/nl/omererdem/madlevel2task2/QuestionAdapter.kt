@@ -12,6 +12,7 @@ class QuestionAdapter(private val questions: List<Question>) :
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemQuestionBinding.bind(itemView)
 
+        // Bind questions to the textview
         fun databind(question: Question) {
             binding.tvQuestion.text = question.question
         }
@@ -23,10 +24,12 @@ class QuestionAdapter(private val questions: List<Question>) :
         )
     }
 
+    // Bind question to the recyclerview
     override fun onBindViewHolder(holder: QuestionAdapter.ViewHolder, position: Int) {
         holder.databind(questions[position])
     }
 
+    // Get item size
     override fun getItemCount(): Int {
         return questions.size
     }
